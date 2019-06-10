@@ -32,10 +32,10 @@ class CryptoWatchlist extends React.Component {
                    </div>
                ))}
 
-                <div className={'add-token'}>
+                {/* <div className={'add-token'}>
                     <div>Add token</div>
                     <input />
-                </div>
+                </div> */}
            </div>
         )
     }

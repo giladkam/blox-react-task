@@ -5,6 +5,10 @@ import { authHandleInputChange, submitAuthForm } from '../../actions/authenticat
 
 class Authentication extends React.Component {
 
+    componentWillMount() {
+       localStorage.removeItem('credentials');
+    }
+    
     render () {
         const { username, password, isLoginFail } = this.props.authentication
         return (

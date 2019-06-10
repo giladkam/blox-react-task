@@ -10,7 +10,7 @@ import {
 
 export const authHandleInputChange = (dispatch, event) => {
     handleInputChange(dispatch, event, UPDATE_AUTH_INPUT);
-}
+};
 
 export const submitAuthForm = (dispatch, event, username, password) => {
     event.preventDefault();
@@ -20,17 +20,17 @@ export const submitAuthForm = (dispatch, event, username, password) => {
         try {
         const res = await authenticate(credentials);
         localStorage.setItem('credentials', res.data.data.token);
-            
-            return dispatch({
+             return dispatch({
                 type: AUTH_SUCCEED,
                 payload: {
                     token: res.data.data.token
                 }
-            })
+            });
+
         } catch (e) {
-            return dispatch({
+             return dispatch({
                 type: AUTH_FAIL
             })
         }
     })();
-}
+};

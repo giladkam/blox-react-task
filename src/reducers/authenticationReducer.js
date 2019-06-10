@@ -21,7 +21,6 @@ export default (state = authenticationReducer, action) => {
                 [name]: value
             }
         case AUTH_SUCCEED: 
-            console.log(action.payload);
             const { token } = action.payload    
             return {
                 ...state,
@@ -30,7 +29,6 @@ export default (state = authenticationReducer, action) => {
                 password: ''
             }  
         case AUTH_FAIL: 
-            console.log('fail');    
             return {
                 ...state,
                 isLoginFail: true
