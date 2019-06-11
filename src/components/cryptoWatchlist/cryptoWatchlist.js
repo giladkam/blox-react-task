@@ -8,6 +8,7 @@ import { fetchUserTokens,
 } from '../../actions/cryptoWatchlist';
 import { updateAuthenticationToken } from '../../actions/general';     
 import AddTokenForm from './addToken';
+import LogoutButton from '../buttons/logout';
 import './cryptoWatchlist.css';
 
 class CryptoWatchlist extends React.Component {
@@ -63,6 +64,8 @@ class CryptoWatchlist extends React.Component {
                     />
                     }
                 </div>
+
+              <LogoutButton />
            </div>
         )
     }
