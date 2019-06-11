@@ -1,6 +1,6 @@
 import { 
     UPDATE_AUTH_INPUT,
-    AUTH_SUCCEED,
+    UPDATE_AUTH_TOKEN,
     AUTH_FAIL
 } from '../actions/actionTypes.js';
 
@@ -20,7 +20,7 @@ export default (state = authenticationReducer, action) => {
                 ...state,
                 [name]: value
             }
-        case AUTH_SUCCEED: 
+        case UPDATE_AUTH_TOKEN: 
             const { token } = action.payload    
             return {
                 ...state,

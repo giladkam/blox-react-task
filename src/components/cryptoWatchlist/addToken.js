@@ -7,6 +7,7 @@ const AddTokenForm = (props) => {
             <label>
             Choose token:
             <select name='addedToken' value={addedToken} onChange={props.handleSelectOnChange}>
+                <option value=''></option>
                 {allTokens.map((token) => (
                     <option 
                         value={token.tokenId}

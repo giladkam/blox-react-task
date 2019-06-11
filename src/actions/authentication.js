@@ -1,10 +1,9 @@
-import {handleInputChange} from './general';
+import {handleInputChange , updateAuthenticationToken} from './general';
 import { authenticate } from '../apis/api.authentication';
 import { 
     UPDATE_AUTH_INPUT,
-    AUTH_SUCCEED,
     AUTH_FAIL
-} from './actionTypes';
+    } from './actionTypes';
 
 
 
@@ -13,7 +12,6 @@ export const authHandleInputChange = (dispatch, event) => {
 };
 
 export const submitAuthForm = (dispatch, event, username, password, ownProps) => {
-    
     event.preventDefault();
     const credentials = JSON.stringify({password, username});
 
@@ -21,12 +19,7 @@ export const submitAuthForm = (dispatch, event, username, password, ownProps) =>
         try {
         const res = await authenticate(credentials);
         localStorage.setItem('credentials', res.data.data.token);
-              dispatch({
-                type: AUTH_SUCCEED,
-                payload: {
-                    token: res.data.data.token
-                }
-            });
+        updateAuthenticationToken(dispatch, res.data.data.token)
             ownProps.history.push('/watchlist');
         } catch (e) {
             dispatch({

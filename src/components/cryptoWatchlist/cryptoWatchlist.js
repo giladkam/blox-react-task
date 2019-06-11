@@ -1,28 +1,44 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchUserTokens, removeToken, fetchAllTokens, handleSelectOnChange, addToken } from '../../actions/cryptoWatchlist';
+import { fetchUserTokens,
+         removeToken,
+         fetchAllTokens,
+         handleSelectOnChange,
+         addToken 
+} from '../../actions/cryptoWatchlist';
+import { updateAuthenticationToken } from '../../actions/general';     
 import AddTokenForm from './addToken';
 import './cryptoWatchlist.css';
 
 class CryptoWatchlist extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.props.updateAuthenticationToken(localStorage.getItem('credentials'));
+    }
+
     componentDidMount() {
-        const credentials = localStorage.getItem('credentials');
-        if(credentials) {
-            this.interval = setInterval(() => {
-                this.props.fetchUserTokens(credentials);
-           }, 50000);
-           this.props.fetchUserTokens(credentials);
-           this.props.fetchAllTokens(credentials);
-        }
+        const authToken =  this.props.authentication.token || localStorage.getItem('credentials');
+        this.fetchData(authToken);
     }
 
     componentWillUnmount() {
         clearInterval(this.interval);
-      }
+    }
+
+    fetchData(authToken) {
+        if(authToken) {
+            this.interval = setInterval(() => {
+                this.props.fetchUserTokens(authToken);
+           }, 50000);
+           this.props.fetchUserTokens(authToken);
+           this.props.fetchAllTokens(authToken);
+        }
+    }
 
     render () {
         const { tokens, tokensIdList, allTokens, addedToken } = this.props.cryptoWatchlist;
+        const authToken = this.props.authentication.token;
         return (
            <div className="crypto-watchlist">
                {tokens.map((token) => (
@@ -30,7 +46,10 @@ class CryptoWatchlist extends React.Component {
                        <img className="coin-details__icon" src={token.icon} alt={token.name} />
                        <div className="coin-details__name">{token.name}</div>
                        <div className="coin-details__price">{token.price}</div>
-                       <button onClick={(event) => this.props.removeToken(event, token.tokenId, tokensIdList)}>Remove coin</button>
+                       <button 
+                        onClick={(event) => this.props.removeToken(event, token.tokenId, tokensIdList,authToken)}>
+                            Remove coin
+                        </button>
                    </div>
                ))}
 
@@ -39,7 +58,7 @@ class CryptoWatchlist extends React.Component {
                     <AddTokenForm 
                         addedToken={addedToken}
                         allTokens={allTokens}
-                        handleSubmit={(e) => this.props.addToken(e,addedToken,tokensIdList)}
+                        handleSubmit={(e) => this.props.addToken(e,addedToken,tokensIdList,authToken)}
                         handleSelectOnChange={this.props.handleSelectOnChange}
                     />
                     }
@@ -51,19 +70,20 @@ class CryptoWatchlist extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        cryptoWatchlist: state.cryptoWatchlist
+        cryptoWatchlist: state.cryptoWatchlist,
+        authentication: state.authenticationReducer
         }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchUserTokens: (cerdentials) => fetchUserTokens(dispatch, cerdentials),
-        removeToken: (event, removedTokenId, tokensIdList) => removeToken(dispatch,event,localStorage.getItem('credentials'), removedTokenId, tokensIdList),
-        fetchAllTokens: (cerdentials) => fetchAllTokens(dispatch, cerdentials),
+        updateAuthenticationToken: (authToken) => updateAuthenticationToken(dispatch,authToken), 
+        fetchUserTokens: (authToken) => fetchUserTokens(dispatch, authToken),
+        removeToken: (event, removedTokenId, tokensIdList, authToken) => removeToken(dispatch,event,authToken, removedTokenId, tokensIdList),
+        fetchAllTokens: (authToken) => fetchAllTokens(dispatch, authToken),
         handleSelectOnChange: (event) => handleSelectOnChange(dispatch,event),
-        addToken: (event, addedToken, tokensIdList) => addToken(dispatch,event,localStorage.getItem('credentials'), addedToken, tokensIdList)
+        addToken: (event, addedToken, tokensIdList, authToken) => addToken(dispatch,event,authToken,addedToken, tokensIdList)
     }
-    // Im taking the token from the local storage intsead from the redux store because i cant update the store and then redirect.
 }
 
 export default  connect(mapStateToProps, mapDispatchToProps)(CryptoWatchlist)
