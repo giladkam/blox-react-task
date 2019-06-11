@@ -20,6 +20,7 @@ class Authentication extends React.Component {
                     value={username} 
                     className="authentication__input" 
                     onChange={this.props.authHandleInputChange} 
+                    placeholder="username"
                 />
                 <input 
                     type="password" 
@@ -27,8 +28,9 @@ class Authentication extends React.Component {
                     value={password}
                     className="authentication__input"
                     onChange={this.props.authHandleInputChange} 
+                    placeholder="password"
                 />
-                <button>Login</button>
+                <button className="authentication__submit-btn">Login</button>
                 {
                 isLoginFail &&
                 <div className="authentication__error-msg">

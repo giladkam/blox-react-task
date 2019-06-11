@@ -1,0 +1,40 @@
+.authentication {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.authentication__input {
+    outline: none;
+    display: block;
+    margin: 0 0 1rem;
+    padding: 0 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    font-size: 14px;
+    height: 2rem;
+    line-height: 2rem;
+}
+
+.authentication__submit-btn {
+    cursor: pointer;
+    background: #098caf;
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 0;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    height: 2rem;
+    line-height: 2rem;
+    margin-bottom: 1rem;
+}
+
+.authentication__error-msg {
+    font-size: 14px;
+    text-align: center;
+    font-weight: 500;
+    color: #7e203c;
+}

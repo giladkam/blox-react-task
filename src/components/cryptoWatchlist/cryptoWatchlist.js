@@ -42,19 +42,22 @@ class CryptoWatchlist extends React.Component {
         const authToken = this.props.authentication.token;
         return (
            <div className="crypto-watchlist">
-               {tokens.map((token) => (
-                   <div key={token.tokenId} className="coin-details">
-                       <img className="coin-details__icon" src={token.icon} alt={token.name} />
-                       <div className="coin-details__name">{token.name}</div>
-                       <div className="coin-details__price">{token.price}</div>
-                       <button 
-                        onClick={(event) => this.props.removeToken(event, token.tokenId, tokensIdList,authToken)}>
-                            Remove coin
-                        </button>
-                   </div>
-               ))}
+               <div className="crypto-watchlist__user-coin">
+                {tokens.map((token) => (
+                    <div key={token.tokenId} className="coin-card">
+                        <img className="coin-card__icon" src={token.icon} alt={token.name} />
+                        <div className="coin-card__name text-align-center">{token.name}</div>
+                        <div className="coin-card__price text-align-center">{token.price}</div>
+                        <button 
+                            className="coin-card__remove-btn"
+                            onClick={(event) => this.props.removeToken(event, token.tokenId, tokensIdList,authToken)}>
+                                Remove coin
+                            </button>
+                    </div>
+                ))}
+               </div>
 
-                <div className={'add-token'}>
+                <div className={'add-coin'}>
                   { allTokens &&
                     <AddTokenForm 
                         addedToken={addedToken}
@@ -64,7 +67,6 @@ class CryptoWatchlist extends React.Component {
                     />
                     }
                 </div>
-
               <LogoutButton />
            </div>
         )

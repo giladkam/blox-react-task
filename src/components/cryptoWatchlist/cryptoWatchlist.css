@@ -1,0 +1,30 @@
+
+.crypto-watchlist {
+    padding: 2rem;
+}
+
+.coin-card {
+    display: inline-block;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: 0.5rem;
+}
+
+.coin-card__icon {
+    margin: auto;
+    display: block;
+}
+
+.coin-card__remove-btn {
+    margin: 0.2rem auto 0;
+    display: block;
+}
+
+.add-coin {
+    margin-bottom: 1rem;
+}
+
+.add-coin_button {
+    margin: 0 0.5rem;
+}

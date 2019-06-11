@@ -4,9 +4,10 @@ const AddTokenForm = (props) => {
     const { addedToken, allTokens } = props;
     return (
         <form onSubmit={props.handleSubmit}>
+            <h3>Add coin</h3>
             <label>
-            Choose token:
-            <select name='addedToken' value={addedToken} onChange={props.handleSelectOnChange}>
+            Choose token: 
+            <select name="addedToken" value={addedToken} onChange={props.handleSelectOnChange}>
                 <option value=''></option>
                 {allTokens.map((token) => (
                     <option 
@@ -18,7 +19,7 @@ const AddTokenForm = (props) => {
                 ))}
             </select>
             </label>
-            <button>Add token</button>
+            <button className="add-coin_button">Add token</button>
         </form>
     )
 };
