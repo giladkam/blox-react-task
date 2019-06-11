@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchUserTokens, removeToken } from '../../actions/cryptoWatchlist';
+import { fetchUserTokens, removeToken, fetchAllTokens, handleSelectOnChange, addToken } from '../../actions/cryptoWatchlist';
+import AddTokenForm from './addToken';
 import './cryptoWatchlist.css';
 
 class CryptoWatchlist extends React.Component {
@@ -12,6 +13,7 @@ class CryptoWatchlist extends React.Component {
                 this.props.fetchUserTokens(credentials);
            }, 50000);
            this.props.fetchUserTokens(credentials);
+           this.props.fetchAllTokens(credentials);
         }
     }
 
@@ -20,7 +22,7 @@ class CryptoWatchlist extends React.Component {
       }
 
     render () {
-        const { tokens, tokensIdList } = this.props.cryptoWatchlist;
+        const { tokens, tokensIdList, allTokens, addedToken } = this.props.cryptoWatchlist;
         return (
            <div className="crypto-watchlist">
                {tokens.map((token) => (
@@ -32,10 +34,16 @@ class CryptoWatchlist extends React.Component {
                    </div>
                ))}
 
-                {/* <div className={'add-token'}>
-                    <div>Add token</div>
-                    <input />
-                </div> */}
+                <div className={'add-token'}>
+                  { allTokens &&
+                    <AddTokenForm 
+                        addedToken={addedToken}
+                        allTokens={allTokens}
+                        handleSubmit={(e) => this.props.addToken(e,addedToken,tokensIdList)}
+                        handleSelectOnChange={this.props.handleSelectOnChange}
+                    />
+                    }
+                </div>
            </div>
         )
     }
@@ -50,7 +58,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchUserTokens: (cerdentials) => fetchUserTokens(dispatch, cerdentials),
-        removeToken: (event, removedTokenId, tokensIdList) => removeToken(dispatch,event,localStorage.getItem('credentials'), removedTokenId, tokensIdList)
+        removeToken: (event, removedTokenId, tokensIdList) => removeToken(dispatch,event,localStorage.getItem('credentials'), removedTokenId, tokensIdList),
+        fetchAllTokens: (cerdentials) => fetchAllTokens(dispatch, cerdentials),
+        handleSelectOnChange: (event) => handleSelectOnChange(dispatch,event),
+        addToken: (event, addedToken, tokensIdList) => addToken(dispatch,event,localStorage.getItem('credentials'), addedToken, tokensIdList)
     }
     // Im taking the token from the local storage intsead from the redux store because i cant update the store and then redirect.
 }

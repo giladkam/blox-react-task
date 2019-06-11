@@ -1,5 +1,6 @@
-import { getUserTokens, userTokensDetails, updateUserTokens } from '../apis/api.cryptoWatchlist';
-import { UPDATE_USER_TOKENS } from './actionTypes';
+import { getUserTokens, userTokensDetails, updateUserTokens, getAllTokens } from '../apis/api.cryptoWatchlist';
+import { UPDATE_USER_TOKENS, UPDATE_ALL_TOKENS, UPDATE_ADDED_TOKEN } from './actionTypes';
+import {handleInputChange} from './general';
 
 export const fetchUserTokens = (dispatch, cerdentials) => {
     (async () => {
@@ -23,16 +24,44 @@ export const fetchUserTokens = (dispatch, cerdentials) => {
 }
 
 export const removeToken = (dispatch, event, cerdentials, removedTokenId, tokensList) => {
-
-    const newTokenIdsList = tokensList.filter(token => token !== removedTokenId);
+    const newTokenIdsList = tokensList.filter(token => token != removedTokenId);
     (async () => {
         try {
-            let res = await updateUserTokens(cerdentials, newTokenIdsList);
+            await updateUserTokens(cerdentials, newTokenIdsList);
+            fetchUserTokens(dispatch,cerdentials)
+        } catch (e) {
+            console.log(e)
+        }
+    })();
+}
+
+export const handleSelectOnChange = (dispatch, event) => {
+    handleInputChange(dispatch, event, UPDATE_ADDED_TOKEN);
+} 
+
+export const addToken = (dispatch, event, cerdentials, addedToken, tokensList) => {
+    event.preventDefault();
+    
+    tokensList.push(addedToken);
+    (async () => {
+        try {
+            let res = await updateUserTokens(cerdentials, tokensList);
+            fetchUserTokens(dispatch,cerdentials);
+        } catch (e) {
+            console.log(e)
+        }
+    })();
+}
+
+
+export const fetchAllTokens = (dispatch, cerdentials) => {
+    (async () => {
+        try {
+            let res = await getAllTokens(cerdentials);
             return dispatch({
-                type: UPDATE_USER_TOKENS,
+                type: UPDATE_ALL_TOKENS,
                 payload: {
-                    tokens: res.data.data,
-                    tokensIdList: newTokenIdsList
+                    allTokens: res.data.data
                 }
             })
         } catch (e) {

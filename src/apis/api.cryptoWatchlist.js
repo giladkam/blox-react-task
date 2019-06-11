@@ -32,3 +32,13 @@ export const updateUserTokens = (cerdentials, tokensIds) => {
         }
     });
 }
+
+export const getAllTokens = (cerdentials) => {
+    return axios.get(tokensDetailsUrl,{
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': cerdentials
+        }
+    });
+}
+
