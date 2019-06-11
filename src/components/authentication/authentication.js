@@ -46,10 +46,10 @@ const mapStateToProps = (state) => {
     }
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         authHandleInputChange: (event) => authHandleInputChange(dispatch, event),
-        submitAuthForm: (event,username,password) => submitAuthForm(dispatch,event,username,password)
+        submitAuthForm: (event,username,password) => submitAuthForm(dispatch,event,username,password, ownProps)
     }
 }
 

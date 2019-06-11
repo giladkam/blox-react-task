@@ -12,7 +12,8 @@ export const authHandleInputChange = (dispatch, event) => {
     handleInputChange(dispatch, event, UPDATE_AUTH_INPUT);
 };
 
-export const submitAuthForm = (dispatch, event, username, password) => {
+export const submitAuthForm = (dispatch, event, username, password, ownProps) => {
+    
     event.preventDefault();
     const credentials = JSON.stringify({password, username});
 
@@ -20,15 +21,15 @@ export const submitAuthForm = (dispatch, event, username, password) => {
         try {
         const res = await authenticate(credentials);
         localStorage.setItem('credentials', res.data.data.token);
-             return dispatch({
+              dispatch({
                 type: AUTH_SUCCEED,
                 payload: {
                     token: res.data.data.token
                 }
             });
-
+            ownProps.history.push('/watchlist');
         } catch (e) {
-             return dispatch({
+            dispatch({
                 type: AUTH_FAIL
             })
         }

@@ -1,12 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import history from './history';
 import Authentication from '../components/authentication/authentication';
 import CryptoWatchlist from '../components/cryptoWatchlist/cryptoWatchlist';
 import PrivateRoute from '../routers/privateRoute';
 
 const AppRouter = () => (
-    <BrowserRouter history={history}>
+    <BrowserRouter>
         <Switch>
             <Route path="/login" component ={Authentication} /> 
             <PrivateRoute path="/watchlist" component ={CryptoWatchlist} /> 
